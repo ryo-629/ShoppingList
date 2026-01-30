@@ -165,28 +165,47 @@ h1 {
   color: #ffffff;
 }
 
-.create-list input[type="date"] {
-  /* スマホ特有の「空っぽ」に見える現象を防ぐ */
-  min-height: 44px;
-  -webkit-appearance: none; /* iOSのデフォルト装飾をリセット */
-  appearance: none;
-  background-color: #ffffff;
-  position: relative;
-  display: flex;
-  align-items: center;
+/* 日付入力欄のカスタマイズ（スマホのグレー背景を消す） */
+input[type="date"] {
+  -webkit-appearance: none;    /* iOSのデフォルトスタイルを解除 */
+  -moz-appearance: none;       /* Firefoxのデフォルトスタイルを解除 */
+  appearance: none;            /* 標準のスタイルを解除 */
+  
+  background-color: #ffffff !important; /* 強制的に白背景にする */
+  color: #333;                 /* 入力文字の色 */
+  display: block;
+  width: 100%;
+  height: 44px;                /* 高さを固定 */
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #bdeee6;   /* 他の入力欄と同じ色 */
+  border-radius: 12px;
+  outline: none;
 }
 
-/* iOSなどで、未入力時に「年 / 月 / 日」のような見た目を作る */
-.create-list input[type="date"]::before {
-  content: "yyyy / mm / dd"; /* PCの表示に近いテキスト */
-  color: #99c7c2;
-  position: absolute;
-  left: 12px;
-  pointer-events: none; /* テキスト越しにクリックできるようにする */
+/* iOSで未入力時に中身が空っぽに見えるのを防ぎ、PC風の案内を出す */
+input[type="date"]::before {
+  content: "yyyy/mm/dd";      /* PCでよく見る形式 */
+  color: #99c7c2;             /* 薄いグレー */
+  width: 100%;
 }
 
-/* 値が入ったら、上記の擬似テキストを消す */
-.create-list input[type="date"]:focus::before,
-.create-list input[type="date"]:not([value=""])::before {
+/* 日付が選択されたら案内（yyyy/mm/dd）を消す */
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
   display: none;
+}
+
+/* カレンダーアイコンを表示したい場合（PC風にするため） */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
 }
