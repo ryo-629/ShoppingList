@@ -73,7 +73,8 @@ h1 {
 .input-row {
   display: flex;
   gap: 10px;
-  justify-content: center;   /* ← 中央寄せ */
+  justify-content: center;
+  margin-bottom: 12px; /* ← この一行を追加 */
 }
 
 
@@ -140,8 +141,9 @@ h1 {
 }
 
 /* 削除ボタン（統一） */
+/* 削除ボタン（雰囲気に合わせた赤系へ調整） */
 .delete-btn {
-  flex-shrink: 0;          /* ← ★これが決定打 */
+  flex-shrink: 0;
   white-space: nowrap;
   min-width: 64px;
   height: 44px;
@@ -149,6 +151,18 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* --- ここから追加・修正 --- */
+  background: #fff0f0;    /* ほんのり薄い赤色の背景 */
+  color: #e57373;         /* 柔らかい赤色の文字 */
+  border: 1px solid #ffcdd2; /* 馴染みの良い薄い赤の枠線 */
+  font-weight: bold;
+}
+
+/* ホバー時（マウスが乗った時）の演出 */
+.delete-btn:active {
+  background: #ffcdd2;
+  color: #ffffff;
 }
 
 
