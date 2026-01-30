@@ -72,20 +72,26 @@ h1 {
 /* 入力欄 */
 .input-row {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 10px;
+  justify-content: center;   /* ← 中央寄せ */
 }
 
+
 .input-row input {
-  flex: 1;
+  flex: 1 1 0;
   padding: 12px;
   font-size: 15px;
   border-radius: 12px;
   border: 1px solid #bdeee6;
 }
 
+.input-row input[type="text"] {
+  max-width: 65%;
+}
+
 .input-row input[type="number"] {
-  max-width: 120px;
+  max-width: 35%;
+  text-align: right;
 }
 
 /* ボタン共通 */
