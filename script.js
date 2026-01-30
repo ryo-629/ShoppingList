@@ -7,22 +7,23 @@ let shoppingLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
 
 // リスト作成
 createListBtn.addEventListener("click", () => {
-  // お店の名前さえあれば作成を許可
-  if (!shopInput.value) return; 
+  // お店の名前が空なら何もしない（日付は空でもOKにする）
+  if (!shopInput.value.trim()) return;
 
   shoppingLists.push({
-    date: dateInput.value, // 空なら空のまま保存
+    // 値があれば使い、なければ空文字にする（明示的に指定）
+    date: dateInput.value || "",
     shop: shopInput.value,
     items: []
   });
 
+  // 入力欄をクリア
   dateInput.value = "";
   shopInput.value = "";
 
-  // type="text" に戻す処理（スマホ表示対策用）
-  if (dateInput.type === "date") {
-    dateInput.type = "text";
-  }
+  // 【重要】スマホ用：一度日付欄に触れた後に空にした場合、
+  // 表示が type="date" のまま固まらないよう強制的に text に戻す
+  dateInput.type = "text";
 
   save();
   render();
