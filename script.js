@@ -15,7 +15,9 @@ createListBtn.addEventListener("click", () => {
     items: []
   });
 
+  // script.js の作成ボタンの中
   dateInput.value = "";
+  dateInput.setAttribute('value', ''); // これを追加するとCSSが反応しやすくなります
   shopInput.value = "";
 
   save();
