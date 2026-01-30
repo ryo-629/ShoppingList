@@ -38,7 +38,7 @@ iPhoneでは「ホーム画面に追加」することで
 ---
 
 ## 🌐 公開URL
-- 
+- https://ryo-629.github.io/ShoppingList/
 
 ## 📲 iPhoneでの使い方
 
