@@ -167,3 +167,46 @@ h1 {
   background: #ffcdd2;
   color: #ffffff;
 }
+
+/* ダークモード時のスタイル */
+body.dark-mode {
+  background: linear-gradient(160deg, #1a2a29, #2d4a44);
+  color: #e0e0e0;
+}
+
+body.dark-mode h1, body.dark-mode .list h2 {
+  color: #4fe3c1;
+}
+
+body.dark-mode .create-list, body.dark-mode .list {
+  background: #253331;
+}
+
+body.dark-mode .create-list input, body.dark-mode .input-row input {
+  background-color: #1b2624 !important;
+  border-color: #3d5a56;
+  color: #ffffff;
+}
+
+body.dark-mode .list button {
+  background: #2d4a44;
+  color: #4fe3c1;
+}
+
+body.dark-mode .delete-btn {
+  background: #3d2b2b;
+  color: #ff8a8a;
+  border-color: #5a3d3d;
+}
+
+/* リスト作成ボタンをダークモード対応 */
+body.dark-mode .create-list button {
+  background: #2d4a44; /* 他のボタンと同じ深い緑 */
+  color: #4fe3c1;      /* 文字は明るいミント色 */
+}
+
+/* ホバーやクリック時の演出（お好みで） */
+body.dark-mode .create-list button:active {
+  background: #4fe3c1;
+  color: #1a2a29;
+}
