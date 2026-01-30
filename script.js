@@ -35,6 +35,8 @@ function render() {
 
   shoppingLists.forEach((list, listIndex) => {
     const total = list.items.reduce((sum, item) => sum + item.price, 0);
+    // チェックされているアイテムがあるか確認
+    const hasCheckedItems = list.items.some(item => item.done);
 
     const div = document.createElement("div");
     div.className = "list";
@@ -55,9 +57,9 @@ function render() {
             <input type="checkbox"
             ${item.done ? "checked" : ""}
             onclick="toggleItem(${listIndex}, ${itemIndex})">
-
+            
             <div class="item-text ${item.done ? "done" : ""}">
-            ${item.name}
+              ${item.name}
             </div>
 
             <span class="price">¥${item.price}</span>
@@ -67,18 +69,34 @@ function render() {
             削除
             </button>
         </div>
-        `).join("")}
+      `).join("")}
 
-
-
-      <button class="delete-btn"
-        onclick="deleteList(${listIndex})">
-        このリストを削除
-      </button>
+      <div class="list-actions">
+        ${hasCheckedItems ? `
+          <button class="clear-checked-btn" onclick="deleteCheckedItems(${listIndex})">
+            チェック済みを削除
+          </button>
+        ` : ""}
+        
+        <button class="delete-btn" onclick="deleteList(${listIndex})">
+          このリストを削除
+        </button>
+      </div>
     `;
 
     listsDiv.appendChild(div);
   });
+}
+
+// チェック済み商品を削除する関数（script.js の末尾などに追加）
+function deleteCheckedItems(listIndex) {
+  if (!confirm("チェックした項目をすべて削除しますか？")) return;
+  
+  // done が false のものだけを残す
+  shoppingLists[listIndex].items = shoppingLists[listIndex].items.filter(item => !item.done);
+  
+  save();
+  render();
 }
 
 // 商品追加
