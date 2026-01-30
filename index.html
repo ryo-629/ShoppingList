@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お買い物リスト</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="買い物リスト">
+</head>
+<body>
+
+<h1>🛒 お買い物リスト</h1>
+
+<div class="create-list">
+  <input type="date" id="dateInput">
+  <input type="text" id="shopInput" placeholder="お店の名前">
+  <button id="createListBtn">リスト作成</button>
+</div>
+
+<div id="lists"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
