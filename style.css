@@ -34,6 +34,9 @@ h1 {
   font-size: 16px;
   border-radius: 12px;
   border: 1px solid #bdeee6;
+  background-color: #ffffff !important; /* 強制的に白 */
+  -webkit-appearance: none;            /* 余計な影を消す */
+  appearance: none;
 }
 
 .create-list button {
@@ -163,40 +166,4 @@ h1 {
 .delete-btn:active {
   background: #ffcdd2;
   color: #ffffff;
-}
-
-.create-list input[type="date"] {
-  /* 1. デフォルトの装飾を徹底的に排除 */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  
-  /* 2. 背景を「白」に固定し、影を消す */
-  background: #ffffff !important;
-  background-image: none !important;
-  box-shadow: none !important;
-  
-  /* 3. 他の入力欄（shopInput）と形を合わせる */
-  border: 1px solid #bdeee6;
-  border-radius: 12px;
-  padding: 12px;
-  font-size: 16px;
-  height: 48px; /* 高さを揃える */
-  color: #333;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* 4. iOSで中身が空の時に勝手に表示される設定を無効化 */
-.create-list input[type="date"]::-webkit-date-and-time-value {
-  text-align: left;
-  margin-right: 10px;
-  min-height: 1.2em;
-}
-
-/* 5. 日付が選択されていない時の文字（PCの再現） */
-.create-list input[type="date"]:not(:focus):not(:valid)::before {
-  content: "yyyy/mm/dd";
-  color: #99c7c2;
-  position: absolute;
 }
