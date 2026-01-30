@@ -102,13 +102,18 @@ h1 {
 /* ===== 商品 ===== */
 .item {
   display: flex;
-  align-items: center;
+  align-items: center;      /* ← 重要：中央揃え */
   gap: 10px;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 16px;
-  background: #f3fffd;
 }
+
+
+.item-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+}
+
+
 
 .item input[type="checkbox"] {
   transform: scale(1.3);
@@ -124,17 +129,20 @@ h1 {
 }
 
 .price {
-  margin-left: auto;
-  font-weight: bold;
+  flex-shrink: 0;
+  margin-left: 8px;
 }
 
 /* 削除ボタン（統一） */
 .delete-btn {
-  background: #ffdede;
-  color: #b40000;
-  border: none;
-  border-radius: 12px;
-  padding: 6px 14px;
-  font-size: 14px;
-  cursor: pointer;
+  flex-shrink: 0;          /* ← ★これが決定打 */
+  white-space: nowrap;
+  min-width: 64px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
