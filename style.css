@@ -165,4 +165,28 @@ h1 {
   color: #ffffff;
 }
 
+.create-list input[type="date"] {
+  /* スマホ特有の「空っぽ」に見える現象を防ぐ */
+  min-height: 44px;
+  -webkit-appearance: none; /* iOSのデフォルト装飾をリセット */
+  appearance: none;
+  background-color: #ffffff;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+/* iOSなどで、未入力時に「年 / 月 / 日」のような見た目を作る */
+.create-list input[type="date"]::before {
+  content: "yyyy / mm / dd"; /* PCの表示に近いテキスト */
+  color: #99c7c2;
+  position: absolute;
+  left: 12px;
+  pointer-events: none; /* テキスト越しにクリックできるようにする */
+}
+
+/* 値が入ったら、上記の擬似テキストを消す */
+.create-list input[type="date"]:focus::before,
+.create-list input[type="date"]:not([value=""])::before {
+  display: none;
+}
