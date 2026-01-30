@@ -210,3 +210,30 @@ body.dark-mode .create-list button:active {
   background: #4fe3c1;
   color: #1a2a29;
 }
+
+/* リスト下のボタンエリア */
+.list-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* チェック済み削除ボタンのスタイル */
+.clear-checked-btn {
+  background: #fff5f5 !important; /* 薄い赤 */
+  color: #e57373 !important;      /* コーラルレッド */
+  border: 1px solid #ffcdd2 !important;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ダークモード時の色調整 */
+body.dark-mode .clear-checked-btn {
+  background: #3d2b2b !important;
+  color: #ff8a8a !important;
+  border-color: #5a3d3d !important;
+}
