@@ -128,6 +128,27 @@ function deleteList(listIndex) {
   render();
 }
 
+const themeToggle = document.getElementById("themeToggle");
+
+// ページ読み込み時に保存されたテーマを適用
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  themeToggle.textContent = "☀️"; // 太陽アイコンに
+}
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  
+  // 現在のモードを保存
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+    themeToggle.textContent = "☀️";
+  } else {
+    localStorage.setItem("theme", "light");
+    themeToggle.textContent = "🌙";
+  }
+});
+
 // 保存
 function save() {
   localStorage.setItem("shoppingLists", JSON.stringify(shoppingLists));
