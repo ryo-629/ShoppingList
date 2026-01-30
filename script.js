@@ -7,18 +7,22 @@ let shoppingLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
 
 // リスト作成
 createListBtn.addEventListener("click", () => {
-  if (!dateInput.value || !shopInput.value) return;
+  // お店の名前さえあれば作成を許可
+  if (!shopInput.value) return; 
 
   shoppingLists.push({
-    date: dateInput.value,
+    date: dateInput.value, // 空なら空のまま保存
     shop: shopInput.value,
     items: []
   });
 
-  // script.js の作成ボタンの中
   dateInput.value = "";
-  dateInput.setAttribute('value', ''); // これを追加するとCSSが反応しやすくなります
   shopInput.value = "";
+
+  // type="text" に戻す処理（スマホ表示対策用）
+  if (dateInput.type === "date") {
+    dateInput.type = "text";
+  }
 
   save();
   render();
@@ -35,7 +39,7 @@ function render() {
     div.className = "list";
 
     div.innerHTML = `
-      <h2>${list.date} / ${list.shop}</h2>
+      <h2>${list.date ? list.date + " / " : ""}${list.shop}</h2>
       <div class="total">合計：¥${total}</div>
 
       <div class="input-row">
