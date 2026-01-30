@@ -45,19 +45,24 @@ function render() {
 
       ${list.items.map((item, itemIndex) => `
         <div class="item">
-          <input type="checkbox"
+            <input type="checkbox"
             ${item.done ? "checked" : ""}
             onclick="toggleItem(${listIndex}, ${itemIndex})">
-          <span class="${item.done ? "done" : ""}">
+
+            <div class="item-text ${item.done ? "done" : ""}">
             ${item.name}
-          </span>
-          <span class="price">¥${item.price}</span>
-          <button class="delete-btn"
+            </div>
+
+            <span class="price">¥${item.price}</span>
+
+            <button class="delete-btn"
             onclick="deleteItem(${listIndex}, ${itemIndex})">
             削除
-          </button>
+            </button>
         </div>
-      `).join("")}
+        `).join("")}
+
+
 
       <button class="delete-btn"
         onclick="deleteList(${listIndex})">
