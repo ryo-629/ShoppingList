@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <base href="./">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <base href="./">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>お買い物リスト</title>
+        <title>お買い物リスト</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4fe3c1">
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#4fe3c1">
 
-  <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.css">
 
-  <link rel="icon" href="icons/icon-192.png">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
+        <link rel="icon" href="icons/icon-192.png">
+        <link rel="apple-touch-icon" href="icons/icon-192.png">
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="買い物リスト">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-</head>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="買い物リスト">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    </head>
 <body>
 
-<div style="text-align: right;">
-  <button id="themeToggle" style="background:none; border:none; cursor:pointer; font-size: 24px;">🌙</button>
-</div>    
-<h1>🛒 お買い物リスト</h1>
+    <div style="text-align: right;">
+        <button id="themeToggle" style="background:none; border:none; cursor:pointer; font-size: 24px;">🌙</button>
+    </div>    
+    <h1>🛒 お買い物リスト</h1>
 
-<div class="create-list">
-  <input type="text" id="dateInput" placeholder="年/月/日" 
-         onfocus="(this.type='date')" 
-         onblur="if(!this.value)this.type='text'">
-  <input type="text" id="shopInput" placeholder="お店の名前">
-  <button id="createListBtn">リスト作成</button>
-</div>
+    <div class="create-list">
+        <div style="display: flex; gap: 12px; width: 100%;">
+            <input type="text" id="dateInput" placeholder="年/月/日" 
+                    onfocus="(this.type='date')" 
+                    onblur="if(!this.value)this.type='text'"
+                    style="display: none;"> <input type="text" id="shopInput" placeholder="タイトル"> </div>
+        
+        <div class="list-options">
+            <label>
+                <input type="checkbox" id="useDateCheckbox"> 日付
+            </label>
+            <label style="margin-left: 16px;">
+                <input type="checkbox" id="listTypeCheckbox"> 金額
+            </label>
+        </div>
 
-<div id="lists"></div>
+        <button id="createListBtn" style="width: 100%; margin-top: 4px;">リスト作成</button>
+    </div>
 
-<script src="script.js"></script>
+    <div id="lists"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>

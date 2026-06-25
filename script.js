@@ -1,29 +1,42 @@
 const dateInput = document.getElementById("dateInput");
-const shopInput = document.getElementById("shopInput");
+const shopInput = document.getElementById("shopInput"); // HTMLのidはそのまま、中身をタイトルとして扱います
+const useDateCheckbox = document.getElementById("useDateCheckbox"); // 【追加】
+const listTypeCheckbox = document.getElementById("listTypeCheckbox");
 const createListBtn = document.getElementById("createListBtn");
 const listsDiv = document.getElementById("lists");
 
 let shoppingLists = JSON.parse(localStorage.getItem("shoppingLists")) || [];
 
+// 【追加】日付のチェックボックスが押されたら、入力欄の表示/非表示を切り替える
+useDateCheckbox.addEventListener("change", () => {
+  if (useDateCheckbox.checked) {
+    dateInput.style.display = "block";
+  } else {
+    dateInput.style.display = "none";
+    dateInput.value = "";
+    dateInput.type = "text";
+  }
+});
+
 // リスト作成
 createListBtn.addEventListener("click", () => {
-  // お店の名前が空なら何もしない（日付は空でもOKにする）
   if (!shopInput.value.trim()) return;
 
   shoppingLists.push({
-    // 値があれば使い、なければ空文字にする（明示的に指定）
-    date: dateInput.value || "",
-    shop: shopInput.value,
+    // 日付にチェックが入っている場合のみ日付を保存、それ以外は空文字
+    date: useDateCheckbox.checked ? dateInput.value : "",
+    title: shopInput.value, // 【変更】shop から title に
+    hasPrice: listTypeCheckbox.checked, 
     items: []
   });
 
-  // 入力欄をクリア
-  dateInput.value = "";
+  // リセット処理
   shopInput.value = "";
-
-  // 【重要】スマホ用：一度日付欄に触れた後に空にした場合、
-  // 表示が type="date" のまま固まらないよう強制的に text に戻す
+  dateInput.value = "";
   dateInput.type = "text";
+  dateInput.style.display = "none";
+  useDateCheckbox.checked = false;
+  // listTypeCheckbox.checked = true; // 金額チェックをONに戻したい場合はコメントアウトを解除
 
   save();
   render();
@@ -34,20 +47,25 @@ function render() {
   listsDiv.innerHTML = "";
 
   shoppingLists.forEach((list, listIndex) => {
-    const total = list.items.reduce((sum, item) => sum + item.price, 0);
-    // チェックされているアイテムがあるか確認
+    const isWithPrice = list.hasPrice; 
+
+    const total = list.items.reduce((sum, item) => sum + (item.price || 0), 0);
     const hasCheckedItems = list.items.some(item => item.done);
 
     const div = document.createElement("div");
     div.className = "list";
 
+    // 過去のデータ（list.shop）があっても動くように互換性を持たせています
+    const displayTitle = list.title || list.shop || "無題のリスト";
+
     div.innerHTML = `
-      <h2>${list.date ? list.date + " / " : ""}${list.shop}</h2>
-      <div class="total">合計：¥${total}</div>
+      <h2>${list.date ? list.date + " / " : ""}${displayTitle}</h2>
+      
+      ${isWithPrice ? `<div class="total">合計：¥${total}</div>` : ""}
 
       <div class="input-row">
         <input type="text" placeholder="商品名" id="name-${listIndex}">
-        <input type="number" placeholder="¥" id="price-${listIndex}">
+        ${isWithPrice ? `<input type="number" placeholder="¥" id="price-${listIndex}">` : ""}
       </div>
 
       <button onclick="addItem(${listIndex})">商品を追加</button>
@@ -62,7 +80,7 @@ function render() {
               ${item.name}
             </div>
 
-            <span class="price">¥${item.price}</span>
+            ${isWithPrice && item.price ? `<span class="price">¥${item.price}</span>` : ""}
 
             <button class="delete-btn"
             onclick="deleteItem(${listIndex}, ${itemIndex})">
@@ -88,13 +106,10 @@ function render() {
   });
 }
 
-// チェック済み商品を削除する関数（script.js の末尾などに追加）
+// チェック済み商品を削除する関数
 function deleteCheckedItems(listIndex) {
   if (!confirm("チェックした項目をすべて削除しますか？")) return;
-  
-  // done が false のものだけを残す
   shoppingLists[listIndex].items = shoppingLists[listIndex].items.filter(item => !item.done);
-  
   save();
   render();
 }
@@ -103,17 +118,23 @@ function deleteCheckedItems(listIndex) {
 function addItem(listIndex) {
   const nameInput = document.getElementById(`name-${listIndex}`);
   const priceInput = document.getElementById(`price-${listIndex}`);
+  const currentList = shoppingLists[listIndex];
 
-  if (!nameInput.value || !priceInput.value) return;
+  if (!nameInput.value.trim()) return;
 
-  shoppingLists[listIndex].items.push({
+  let priceValue = 0;
+  if (currentList.hasPrice && priceInput && priceInput.value) {
+    priceValue = Number(priceInput.value);
+  }
+
+  currentList.items.push({
     name: nameInput.value,
-    price: Number(priceInput.value),
+    price: priceValue,
     done: false
   });
 
   nameInput.value = "";
-  priceInput.value = "";
+  if (priceInput) priceInput.value = "";
 
   save();
   render();
@@ -123,7 +144,6 @@ function addItem(listIndex) {
 function toggleItem(listIndex, itemIndex) {
   shoppingLists[listIndex].items[itemIndex].done =
     !shoppingLists[listIndex].items[itemIndex].done;
-
   save();
   render();
 }
@@ -131,7 +151,6 @@ function toggleItem(listIndex, itemIndex) {
 // 商品削除
 function deleteItem(listIndex, itemIndex) {
   if (!confirm("この項目を本当に削除してもよろしいですか？")) return;
-
   shoppingLists[listIndex].items.splice(itemIndex, 1);
   save();
   render();
@@ -140,7 +159,6 @@ function deleteItem(listIndex, itemIndex) {
 // リスト削除
 function deleteList(listIndex) {
   if (!confirm("このお買い物リストを本当に削除してもよろしいですか？")) return;
-
   shoppingLists.splice(listIndex, 1);
   save();
   render();
@@ -151,7 +169,7 @@ const themeToggle = document.getElementById("themeToggle");
 // ページ読み込み時に保存されたテーマを適用
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark-mode");
-  themeToggle.textContent = "☀️"; // 太陽アイコンに
+  themeToggle.textContent = "☀️"; 
 }
 
 themeToggle.addEventListener("click", () => {
